@@ -22,9 +22,9 @@ class TableDataViewSet(viewsets.ModelViewSet):
     ordering = ['-id']
     pagination_class = TablePagination
 
-    @action(detail=False, methods=['post'])
-    def generate_data(self, request):
-        """Эндпоинт для генерации тестовых данных"""
-        count = request.data.get('count', 100)
-        message = TableData.generate_random_data(count)
-        return Response({'status': 'success', 'message': message})
+    # @action(detail=False, methods=['post'])
+    # def generate_data(self, request):
+    #     """Эндпоинт для генерации тестовых данных"""
+    #     count = request.data.get('count', 100)
+    #     message = TableData.generate_random_data(count)
+    #     return Response({'status': 'success', 'message': message})
