@@ -1,7 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from faker import Faker
-import random
 
 class TableData(models.Model):
     """Модель для хранения данных таблицы"""
@@ -13,22 +11,7 @@ class TableData(models.Model):
     class Meta:
         verbose_name = "Данные таблицы"
         verbose_name_plural = "Данные таблицы"
-        ordering = ['-id']
+        ordering = ["id"]
 
     def __str__(self):
         return f"{self.name} ({self.date})"
-
-    # @classmethod
-    # def generate_random_data(cls, count=100):
-    #     """Метод для генерации тестовых данных"""
-    #     objects = []
-    #     fake = Faker("ru_RU")
-    #
-    #     for i in range(count):
-    #         objects.append(cls(
-    #             name=fake.word().capitalize(),
-    #             quantity=random.randint(1, 1000),
-    #             distance=random.uniform(1.0, 1000.0)
-    #         ))
-    #     cls.objects.bulk_create(objects)
-    #     return f"Создано {count} тестовых записей"
