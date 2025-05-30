@@ -1,0 +1,55 @@
+# В корне проекта создаем docker-compose.yml и Dockerfile для каждого сервиса
+
+services:
+  backend:
+    build: ./backend
+#    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+      - backend_static:/app/staticfiles
+      - backend_media:/app/media
+    expose:
+      - 8000
+#    environment:
+#      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+#    command: npm run dev
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - backend_static:/app/staticfiles
+      - backend_media:/app/media
+
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./backend/.env
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=postgres
+
+volumes:
+  postgres_data:
+  backend_static:
+  backend_media:

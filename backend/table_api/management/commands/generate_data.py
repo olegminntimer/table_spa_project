@@ -1,6 +1,4 @@
 # backend/table_api/management/commands/generate_data.py
-from turtledemo.penrose import start
-
 from django.core.management.base import BaseCommand
 from faker import Faker
 import random
@@ -14,7 +12,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fake = Faker('ru-RU')
-        TableData.objects.all().delete()
+        # Удаляем только если таблица существует
+        if TableData.objects.exists():
+            TableData.objects.all().delete()
+
+        # Генерируем тестовые данные
         start_date = datetime(2020, 1,1)
         end_date = datetime(2025,1,1)
         for _ in range(100):

@@ -71,10 +71,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-if os.getenv("SERVER_TYPE") == "local":
-    host_db = "127.0.0.1"
-else:
+if os.getenv("SERVER_TYPE") == "Docker":
     host_db = "db"
+else:
+    host_db = "127.0.0.1"
 
 DATABASES = {
     "default": {
@@ -140,3 +140,13 @@ REST_FRAMEWORK = {
         'rest_framework.filters.OrderingFilter',
     ],
 }
+
+# В backend/config/settings.py добавьте
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost',
+    'http://localhost:80',
+    'http://localhost:8000',
+]
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
