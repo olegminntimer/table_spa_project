@@ -1,5 +1,5 @@
 <script>
-  import Table from './Table.svelte';
+  import Table from './lib/Table.svelte';
 </script>
 
 <main>
@@ -20,7 +20,4 @@
     margin-bottom: 30px;
     color: #333;
   }
-</style>
-<style global>
-  @import 'bootstrap/dist/css/bootstrap.min.css';
 </style>

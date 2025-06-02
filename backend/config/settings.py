@@ -141,6 +141,14 @@ REST_FRAMEWORK = {
     ],
 }
 
+# Настройки CORS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Обычный порт Svelte/Vite
+    "http://127.0.0.1:5173",
+    "http://localhost:80",    # Nginx
+    "http://127.0.0.1:80",    # Nginx
+]
+
 # В backend/config/settings.py добавьте
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
