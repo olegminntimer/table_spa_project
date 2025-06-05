@@ -15,7 +15,7 @@ SPA-приложение для отображения и управления �
     │ ├── table_api/ # Приложение с API
     │ ├── Dockerfile # Конфигурация для бекенда
     │ └── requirements.txt # Зависимости Python
-    ├── frontend/ # Svelte приложение
+    ├── svelte-front/ # Svelte приложение
     │ ├── src/ # Исходный код фронтенда
     │ ├── Dockerfile # Конфигурация для фронтенда
     │ └── package.json # Зависимости Node.js
@@ -38,8 +38,8 @@ SPA-приложение для отображения и управления �
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/yourusername/table-spa.git
-   cd table-spa
+   https://github.com/olegminntimer/table_spa_project.git
+   cd table_spa_project
 2. Запустите сервисы:
     ```bash
     docker-compose up --build
@@ -73,7 +73,7 @@ SPA-приложение для отображения и управления �
 
 1. Скопируйте файлы на сервер:
     ```bash
-    scp -r .env docker-compose.yml backend frontend nginx user@server:/path/to/app
+    scp -r .env docker-compose.yml backend svelte-front nginx user@server:/path/to/app
 2. На сервере:
     ```bash
     docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
@@ -125,11 +125,13 @@ SPA-приложение для отображения и управления �
 
     DEBUG=1
     SECRET_KEY=your-secret-key
-    POSTGRES_DB=postgres
-    POSTGRES_USER=postgres
-    POSTGRES_PASSWORD=postgres
-    POSTGRES_HOST=db
-    POSTGRES_PORT=5432
+
+    SERVER_TYPE=Docker # для реализации приложения с Docker
+    # для реализации приложения без Docker: SERVER_TYPE=noDocker
+
+    POSTGRES_DB=your_name_db
+    POSTGRES_USER=your_name_user
+    POSTGRES_PASSWORD=your_db_password
 
 ## Команды для разработки
 
@@ -149,11 +151,11 @@ SPA-приложение для отображения и управления �
 
 - Установить зависимости:
     ```bash
-    docker-compose exec frontend npm install
+    docker-compose exec svelte-front npm install
 
 - Запустить в development режиме:
   ```bash
-  docker-compose exec frontend npm run dev
+  docker-compose exec svelte-front npm run dev
 
 ## Лицензия
 

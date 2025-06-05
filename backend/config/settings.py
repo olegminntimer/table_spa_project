@@ -1,9 +1,8 @@
 import os
 import sys
-
 from pathlib import Path
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -15,8 +14,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = True if os.getenv("DEBUG") == "True" else False
 
 # Разрешенные хосты
-ALLOWED_HOSTS = ['*']  # Для разработки, в production укажите конкретные домены
-
+ALLOWED_HOSTS = ["*"]  # Для разработки, в production укажите конкретные домены
 
 
 INSTALLED_APPS = [
@@ -26,13 +24,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     # Сторонние приложения
     "rest_framework",
     "corsheaders",
     "drf_yasg",
     "django_filters",
-
     # Локальные приложения
     "table_api",
 ]
@@ -144,9 +140,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
-        'rest_framework.filters.OrderingFilter',
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.OrderingFilter",
     ],
 }
 
@@ -154,39 +150,39 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Обычный порт Svelte/Vite
     "http://127.0.0.1:5173",
-    "http://localhost:80",    # Nginx
-    "http://127.0.0.1:80",    # Nginx
+    "http://localhost:80",  # Nginx
+    "http://127.0.0.1:80",  # Nginx
 ]
 
 # В backend/config/settings.py добавьте
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost',
-    'http://localhost:80',
-    'http://localhost:8000',
+    "http://localhost",
+    "http://localhost:80",
+    "http://localhost:8000",
 ]
 
 USE_X_FORWARDED_HOST = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+TEST_RUNNER = "django.test.runner.DiscoverRunner"
 COVERAGE_EXCLUDES_FOLDERS = [
-    'migrations/',
-    'tests/',
-    'settings/',
-    'urls.py',
-    'wsgi.py',
-    'asgi.py',
-    'admin.py',
-    'apps.py',
-    '__init__.py',
-    'management/commands/',
+    "migrations/",
+    "tests/",
+    "settings/",
+    "urls.py",
+    "wsgi.py",
+    "asgi.py",
+    "admin.py",
+    "apps.py",
+    "__init__.py",
+    "management/commands/",
 ]
 
 COVERAGE_MODULE_EXCLUDES = [
-    'tests$',
-    'migrations$',
-    'urls$',
-    'wsgi$',
-    'admin$',
-    'management.commands',
+    "tests$",
+    "migrations$",
+    "urls$",
+    "wsgi$",
+    "admin$",
+    "management.commands",
 ]
