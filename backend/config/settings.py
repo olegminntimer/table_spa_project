@@ -1,4 +1,5 @@
 import os
+import sys
 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -71,21 +72,29 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-if os.getenv("SERVER_TYPE") == "Docker":
-    host_db = "db"
-else:
-    host_db = "127.0.0.1"
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("POSTGRES_DB"),
-        "USER": os.getenv("POSTGRES_USER"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": host_db,
-        "PORT": "5432",
+if "test" in sys.argv or os.getenv("GITHUB_ACTIONS") == "true":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "test_db.sqlite3",
+        }
     }
-}
+else:
+    if os.getenv("SERVER_TYPE") == "Docker":
+        host_db = "db"
+    else:
+        host_db = "127.0.0.1"
+
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("POSTGRES_DB"),
+            "USER": os.getenv("POSTGRES_USER"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+            "HOST": host_db,
+            "PORT": "5432",
+        }
+    }
 
 
 # Password validation

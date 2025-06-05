@@ -12,9 +12,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fake = Faker('ru-RU')
-        # Удаляем только если таблица существует
+        # # Удаляем только если таблица существует
+        # if TableData.objects.exists():
+        #     TableData.objects.all().delete()
+
+        # Проверяем, есть ли уже данные в базе
         if TableData.objects.exists():
-            TableData.objects.all().delete()
+            self.stdout.write(self.style.WARNING('Data already exists. Skipping generation.'))
+            return
 
         # Генерируем тестовые данные
         start_date = datetime(2020, 1,1)
