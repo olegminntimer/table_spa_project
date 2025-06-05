@@ -15,7 +15,7 @@ class TableData(models.Model):
     class Meta:
         verbose_name = "Данные таблицы"
         verbose_name_plural = "Данные таблицы"
-        ordering = ["id"]
+        ordering = ["date"]
 
     def __str__(self):
         return f"{self.name} ({self.date})"

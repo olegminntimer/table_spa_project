@@ -46,11 +46,11 @@ SPA-приложение для отображения и управления �
 
 3. Приложение будет доступно по адресу:
 
-    Frontend: http://localhost
+    Frontend: http://localhost:5173
 
-    Backend API: http://localhost/api
+    Backend API: http://localhost:8000/api
     
-    Swagger UI: http://localhost/api/docs
+    Swagger UI: http://localhost:8000/api/docs
 
 ### Запуск в production режиме
 

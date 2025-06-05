@@ -9,16 +9,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
-#    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "python3 manage.py collectstatic --noinput && python manage.py migrate && python manage.py generate_data && gunicorn config.wsgi:application --bind 0.0.0.0:8000"
+
+#    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app
       - backend_static:/app/staticfiles
       - backend_media:/app/media
     ports:
       - "8000:8000"
-    expose:
-      - 8000
     env_file:
       - ./backend/.env
 
@@ -29,8 +28,6 @@ services:
       - /app/node_modules
     ports:
       - "5173:5173"
-    expose:
-      - "5173"
     command: npm run dev
 
   nginx:
