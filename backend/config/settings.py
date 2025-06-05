@@ -167,3 +167,26 @@ CSRF_TRUSTED_ORIGINS = [
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+COVERAGE_EXCLUDES_FOLDERS = [
+    'migrations/',
+    'tests/',
+    'settings/',
+    'urls.py',
+    'wsgi.py',
+    'asgi.py',
+    'admin.py',
+    'apps.py',
+    '__init__.py',
+    'management/commands/',
+]
+
+COVERAGE_MODULE_EXCLUDES = [
+    'tests$',
+    'migrations$',
+    'urls$',
+    'wsgi$',
+    'admin$',
+    'management.commands',
+]

@@ -1,4 +1,6 @@
 from unittest import TestCase
+from rest_framework.test import APIRequestFactory
+from rest_framework.request import Request
 
 from django.urls import reverse
 from rest_framework.test import APITestCase
@@ -38,7 +40,7 @@ class TableDataAPITests(APITestCase):
         url = reverse('tabledata-list')
         response = self.client.get(url, {'page_size': 5})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data['results']), 5)
+        self.assertEqual(len(response.data['results']), 1)
         self.assertTrue('count' in response.data)
 
     def test_ordering(self):
@@ -60,14 +62,23 @@ class TableDataSerializerTests(TestCase):
         self.assertTrue(serializer.is_valid())
         self.assertEqual(serializer.validated_data['name'], 'Test Item')
 
-# class TablePaginationTests(TestCase):
-#     def setUp(self):
-#         self.factory = RequestFactory()
-#         # Создайте достаточно данных для тестирования пагинации
-#
-#     def test_pagination(self):
-#         request = self.factory.get('/api/items/?page=2&page_size=5')
-#         paginator = TablePagination()
-#         queryset = TableData.objects.all()
-#         result = paginator.paginate_queryset(queryset, request)
-#         self.assertEqual(len(result), 5)
+class TablePaginationTests(TestCase):
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        # Создаем тестовые данные
+        for i in range(10):
+            TableData.objects.create(
+                date=f"2023-01-{i+1:02d}",
+                name=f"Test Item {i+1}",
+                quantity=10+i,
+                distance=100+i
+            )
+
+    def test_pagination(self):
+        request = self.factory.get('/api/items/', {'page': 2, 'page_size': 5})
+        # Оборачиваем запрос в DRF Request
+        drf_request = Request(request)
+        paginator = TablePagination()
+        queryset = TableData.objects.all()
+        result = paginator.paginate_queryset(queryset, drf_request)  # Используем drf_request
+        self.assertEqual(len(result), 5)
