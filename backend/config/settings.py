@@ -149,6 +149,8 @@ REST_FRAMEWORK = {
 # Настройки CORS
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Обычный порт Svelte/Vite
+    # "http://localhost:8001",  # Обычный порт Svelte/Vite
+    "http://localhost:8000",
     "http://127.0.0.1:5173",
     "http://localhost:80",  # Nginx
     "http://127.0.0.1:80",  # Nginx

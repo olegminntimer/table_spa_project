@@ -18,5 +18,5 @@ class TableDataViewSet(viewsets.ModelViewSet):
         "distance": ["exact", "gt", "lt"],
     }
     ordering_fields = ["name", "quantity", "distance"]
-    ordering = ["-id"]
+    ordering = ["-data"]
     pagination_class = TablePagination

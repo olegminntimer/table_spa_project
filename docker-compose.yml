@@ -20,6 +20,8 @@ services:
       - "8000:8000"
     env_file:
       - ./backend/.env
+    networks:
+      - ts_project
 
   svelte-front:
     build: ./svelte-front
@@ -29,6 +31,8 @@ services:
     ports:
       - "5173:5173"
     command: npm run dev
+    networks:
+      - ts_project
 
   nginx:
     build: ./nginx
@@ -40,6 +44,8 @@ services:
     volumes:
       - backend_static:/app/staticfiles
       - backend_media:/app/media
+    networks:
+      - ts_project
 
   db:
     image: postgres:16
@@ -52,9 +58,15 @@ services:
       - postgres_data:/var/lib/postgresql/data
     env_file:
       - ./backend/.env
+    networks:
+      - ts_project
 
 
 volumes:
   postgres_data:
   backend_static:
   backend_media:
+
+networks:
+  ts_project:
+    driver: bridge
