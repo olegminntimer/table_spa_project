@@ -22,7 +22,6 @@ SPA-приложение для отображения и управления �
     ├── nginx/ # Конфигурация Nginx
     │ ├── nginx.conf # Основной конфиг
     │ └── conf.d/ # Конфиги виртуальных хостов
-    ├── db_data/ # Данные PostgreSQL
     ├── docker-compose.yml # Конфигурация Docker
     └── README.md # Этот файл
 
