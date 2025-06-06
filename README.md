@@ -104,8 +104,8 @@ SPA-приложение для отображения и управления �
 
 ### Примеры API запросов
 
-#### Получение данных с фильтрацией
-    ```bash
+#### Получение данных с фильтрацией:
+
     curl -X GET "http://localhost/api/items/?name__contains=test&quantity__gt=10&ordering=-distance"
 
 ## Настройка окружения
