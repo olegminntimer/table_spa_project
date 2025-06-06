@@ -69,16 +69,6 @@ SPA-приложение для отображения и управления �
     ```bash
     docker-compose up -d --build
 
-### Деплой на production сервер
-
-1. Скопируйте файлы на сервер:
-    ```bash
-    scp -r .env docker-compose.yml backend svelte-front nginx user@server:/path/to/app
-2. На сервере:
-    ```bash
-    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
-
-
 ## API Endpoints
 
 ### Таблица данных
