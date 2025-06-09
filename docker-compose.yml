@@ -1,0 +1,72 @@
+# В корне проекта создаем docker-compose.yml и Dockerfile для каждого сервиса
+
+services:
+  backend:
+#    build:
+#      context: ./backend  # текущая директория
+#      dockerfile: Dockerfile  # или другой путь, например ./backend/Dockerfile
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "python3 manage.py collectstatic --noinput && python manage.py migrate && python manage.py generate_data && gunicorn config.wsgi:application --bind 0.0.0.0:8000"
+
+#    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+      - backend_static:/app/staticfiles
+      - backend_media:/app/media
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    networks:
+      - ts_project
+
+  svelte-front:
+    build: ./svelte-front
+    volumes:
+      - ./svelte-front:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    command: npm run dev
+    networks:
+      - ts_project
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - svelte-front
+    volumes:
+      - backend_static:/app/staticfiles
+      - backend_media:/app/media
+    networks:
+      - ts_project
+
+  db:
+    image: postgres:16
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./backend/.env
+    networks:
+      - ts_project
+
+
+volumes:
+  postgres_data:
+  backend_static:
+  backend_media:
+
+networks:
+  ts_project:
+    driver: bridge
